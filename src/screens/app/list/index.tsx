@@ -51,10 +51,11 @@ const ListScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingBlock: 20,
   },
   item: {
-    padding: 10,
+    paddingBlock: 10,
+    paddingInline: 30,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
