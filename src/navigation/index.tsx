@@ -19,7 +19,7 @@ const RootStack = createNativeStackNavigator({
   screens: {
     [ROUTES.HOME]: {
       screen: BottomTabs,
-      options: { headerShown: false }, // Hide stack header to show tab headers
+      options: { headerShown: false },
     },
     [ROUTES.LIST]: ListScreen,
     [ROUTES.DETAILS]: DetailsScreen,
