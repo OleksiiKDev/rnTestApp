@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { fetchList } from '@/api/fetch-list';
-import { Person } from '@/types/card';
+import { ROUTES } from '@/constants/routes';
+import { type Person } from '@/types/card';
+import { type RootStackNavigationProp } from '@/types/navigation';
 
 const ListScreen = () => {
   const [list, setList] = useState<Person[]>([]);
+  const navigation = useNavigation<RootStackNavigationProp>();
+
+  const handleItemPress = (person: Person) => {
+    const { url } = person;
+    const id = url.split('/').filter(Boolean).pop() as string;
+    navigation.navigate(ROUTES.DETAILS, { personId: id });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,16 +31,17 @@ const ListScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>List Screen</Text>
       <ScrollView>
         {list.map((person, index) => (
-          <View key={index} style={styles.item}>
-            <Text style={styles.name}>{person.name}</Text>
-            <View>
-              <Text style={styles.details}>{person.gender}</Text>
-              <Text style={styles.details}>{person.birth_year}</Text>
+          <Pressable key={index} onPress={() => handleItemPress(person)}>
+            <View key={index} style={styles.item}>
+              <Text style={styles.name}>{person.name}</Text>
+              <View>
+                <Text style={styles.details}>{person.gender}</Text>
+                <Text style={styles.details}>{person.birth_year}</Text>
+              </View>
             </View>
-          </View>
+          </Pressable>
         ))}
       </ScrollView>
     </View>
