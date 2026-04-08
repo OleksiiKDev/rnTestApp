@@ -1,12 +1,16 @@
 
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ROUTES } from '@/constants/routes';
 import  HomeScreen from '../screens/app/home';
+import ListScreen from '@/screens/app/list';
 
 const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Home',
+  initialRouteName: ROUTES.HOME,
   screens: {
-    Home: HomeScreen,
+    [ROUTES.HOME]: HomeScreen,
+    [ROUTES.LIST]: ListScreen,
+
   },
 });
 
