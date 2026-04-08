@@ -1,12 +1,8 @@
-import React from "react";
-import { View, Text } from 'react-native';
+import React from 'react';
+import { MapView } from '@maplibre/maplibre-react-native';
 
 const MapScreen = () => {
-  return (
-    <View>
-        <Text>Map Screen</Text>
-    </View>
-  );
-}
+  return <MapView style={{ flex: 1 }} />;
+};
 
 export default MapScreen;
