@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchList } from '@/api/fetch-list';
-import { type Person } from '@/types/card';
+import { type DetailedPerson } from '@/types/api/fetch-list';
 
-export const fetchPeople = createAsyncThunk<Person[]>(
+export const fetchPeople = createAsyncThunk<DetailedPerson[]>(
   'people/fetch',
   async (_, {  rejectWithValue }) => {
     try {

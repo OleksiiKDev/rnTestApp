@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { type Person } from '@/types/card';
 import { fetchPeople } from '@/redux/thunks';
+import { personDTO } from '@/utils/people';
 
 export const peopleSlice = createSlice({
   name: 'people',
@@ -12,7 +13,8 @@ export const peopleSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchPeople.fulfilled, (state, action) => {
-      state.people = action.payload;
+      const people = action.payload.map(personDTO);
+      state.people = people;
     });
     builder.addCase(fetchPeople.rejected, (_, action) => {
       console.error('Failed to fetch people:', action.payload);

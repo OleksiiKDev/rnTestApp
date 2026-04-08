@@ -14,8 +14,7 @@ const ListScreen = () => {
   const list = useAppSelector(peopleList);
 
   const handleItemPress = (person: Person) => {
-    const { url } = person;
-    const id = url.split('/').filter(Boolean).pop() as string;
+    const { id } = person;
     navigation.navigate(ROUTES.DETAILS, { personId: id });
   };
 
@@ -27,9 +26,9 @@ const ListScreen = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {list.map((person, index) => (
-          <Pressable key={index} onPress={() => handleItemPress(person)}>
-            <View key={index} style={styles.item}>
+        {list.map(person => (
+          <Pressable key={person.id} onPress={() => handleItemPress(person)}>
+            <View style={styles.item}>
               <Text style={styles.name}>{person.name}</Text>
               <View>
                 <Text style={styles.details}>{person.gender}</Text>
