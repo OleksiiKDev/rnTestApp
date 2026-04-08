@@ -7,7 +7,7 @@ import {
 import { fetchFavourites, fetchPeople } from '@/redux/thunks';
 import { peopleList } from '@/redux/selectors';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import PersonCard from '@/components/PersonCard';
+import PersonCard from '@/components/Person/Card';
 
 const ListScreen = () => {
   const dispatch = useAppDispatch();

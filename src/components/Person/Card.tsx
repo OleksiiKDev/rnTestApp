@@ -1,25 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Button } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '@/constants/routes';
 import { type Person } from '@/types/card';
 import { type RootStackNavigationProp } from '@/types/navigation';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { isPersonFavourite } from '@/redux/selectors';
-import { addToFavourites, removeFromFavourites } from '@/redux/thunks';
+import FavouriteToggle from './FavouriteToggle';
 
 const PersonCard = ({ person }: { person: Person }) => {
-  const dispatch = useAppDispatch();
   const navigation = useNavigation<RootStackNavigationProp>();
-  const isInFavourites = useAppSelector(isPersonFavourite(person.id));
 
-  const handleFavouriteToggle = () => {
-    if (isInFavourites) {
-      dispatch(removeFromFavourites(person.id));
-      return;
-    }
-    dispatch(addToFavourites(person.id));
-  };
+  
 
   return (
     <Pressable
@@ -34,12 +24,7 @@ const PersonCard = ({ person }: { person: Person }) => {
           <Text style={styles.details}>{person.gender}</Text>
           <Text style={styles.details}>{person.birth_year}</Text>
         </View>
-        <Button
-          title={
-            isInFavourites ? 'Remove from Favourites' : 'Add to Favourites'
-          }
-          onPress={handleFavouriteToggle}
-        />
+        <FavouriteToggle person={person} />
       </View>
     </Pressable>
   );
