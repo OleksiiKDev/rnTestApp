@@ -13,3 +13,9 @@ export const personById = (id: string) =>
     peopleState,
     people => people.people.find(person => person.id === id),
   );
+
+export const isPersonFavourite = (id: string) =>
+  createSelector(
+    peopleState,
+    people => people.favouriteIds.includes(id),
+  );

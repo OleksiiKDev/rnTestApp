@@ -1,41 +1,30 @@
 import React, { useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { ROUTES } from '@/constants/routes';
-import { type Person } from '@/types/card';
-import { type RootStackNavigationProp } from '@/types/navigation';
-import { fetchPeople } from '@/redux/thunks';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
+import { fetchFavourites, fetchPeople } from '@/redux/thunks';
 import { peopleList } from '@/redux/selectors';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import PersonCard from '@/components/PersonCard';
 
 const ListScreen = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<RootStackNavigationProp>();
   const list = useAppSelector(peopleList);
 
-  const handleItemPress = (person: Person) => {
-    const { id } = person;
-    navigation.navigate(ROUTES.DETAILS, { personId: id });
-  };
 
   useEffect(() => {
     if (list.length !== 0) return;
     dispatch(fetchPeople());
+    dispatch(fetchFavourites());
   }, [dispatch, list.length]);
 
   return (
     <View style={styles.container}>
       <ScrollView>
         {list.map(person => (
-          <Pressable key={person.id} onPress={() => handleItemPress(person)}>
-            <View style={styles.item}>
-              <Text style={styles.name}>{person.name}</Text>
-              <View>
-                <Text style={styles.details}>{person.gender}</Text>
-                <Text style={styles.details}>{person.birth_year}</Text>
-              </View>
-            </View>
-          </Pressable>
+          <PersonCard key={person.id} person={person} />
         ))}
       </ScrollView>
     </View>
@@ -46,20 +35,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBlock: 20,
-  },
-  item: {
-    paddingBlock: 10,
-    paddingInline: 30,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  details: {
-    fontSize: 14,
-    color: '#666',
   },
 });
 
