@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { fetchList } from '@/api/fetch-list';
 import { ROUTES } from '@/constants/routes';
 import { type Person } from '@/types/card';
 import { type RootStackNavigationProp } from '@/types/navigation';
+import { fetchPeople } from '@/redux/thunks';
+import { peopleList } from '@/redux/selectors';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 const ListScreen = () => {
-  const [list, setList] = useState<Person[]>([]);
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<RootStackNavigationProp>();
+  const list = useAppSelector(peopleList);
 
   const handleItemPress = (person: Person) => {
     const { url } = person;
@@ -17,17 +20,9 @@ const ListScreen = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchList();
-        setList(data.results || []);
-      } catch (error) {
-        console.error('Error fetching list:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+    if (list.length !== 0) return;
+    dispatch(fetchPeople());
+  }, [dispatch, list.length]);
 
   return (
     <View style={styles.container}>
