@@ -4,6 +4,7 @@ import { DetailsRouteProp } from '@/types/navigation';
 import { View, Text } from 'react-native';
 import { useAppSelector } from "@/redux/hooks";
 import { personById } from "@/redux/selectors";
+import FavouriteToggle from "@/components/Person/FavouriteToggle";
 
 const DetailsScreen = () => {
   const route = useRoute<DetailsRouteProp>();
@@ -17,6 +18,7 @@ const DetailsScreen = () => {
             <Text>{person.name}</Text>
             <Text>{person.gender}</Text>
             <Text>{person.birth_year}</Text>
+            <FavouriteToggle person={person} />
           </View>
         )}
     </View>
