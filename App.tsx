@@ -10,6 +10,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Navigation from '@/navigation';
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
+import { colors } from '@/theme';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -17,7 +18,10 @@ function App() {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={colors.background}
+        />
         <Navigation />
       </SafeAreaProvider>
     </Provider>
@@ -25,3 +29,9 @@ function App() {
 }
 
 export default App;
+
+// const styles = StyleSheet.create({
+//   AndroidSafeArea: {
+//     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+//   }
+// });
